@@ -15,6 +15,8 @@ async function bootstrap() {
   );
   app.useGlobalPipes(new ValidationPipe());
 
+  app.setGlobalPrefix('api');
+
   // Enable CORS. Dynamic import avoids issues with module loading order (i.e. @fastify/cors must be imported at the very top).
   const cors = await import('@fastify/cors');
   await app.register(cors.default, {
