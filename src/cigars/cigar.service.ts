@@ -19,7 +19,7 @@ export class CigarService {
     @InjectRepository(Cigar)
     private readonly cigarRepository: Repository<Cigar>,
     private readonly brandService: BrandService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<CigarGetDTO[]> {
     const cigars = await this.cigarRepository.find({
@@ -55,7 +55,7 @@ export class CigarService {
     };
   }
 
-  async create(cigarDto: CigarPostPayload): Promise<CigarPostPayload> {
+  async create(cigarDto: CigarPostPayload): Promise<CigarGetDTO> {
     const brand = await this.brandService
       .findAll()
       .then((brands) => brands.find((b) => b.id === cigarDto.brand_id));
@@ -65,19 +65,21 @@ export class CigarService {
     const cigar = this.cigarRepository.create({
       name: cigarDto.name,
       brand_id: cigarDto.brand_id,
+      brand,
     });
     const savedCigar = await this.cigarRepository.save(cigar);
     return {
       id: savedCigar.id,
       name: savedCigar.name,
       brand_id: savedCigar.brand_id,
+      brand_name: savedCigar.brand.name,
+      vitolas: savedCigar.vitolas || [],
+      created_at: savedCigar.created_at,
+      updated_at: savedCigar.updated_at,
     };
   }
 
-  async update(
-    id: string,
-    cigarDto: CigarPatchPayload,
-  ): Promise<CigarPostPayload> {
+  async update(id: string, cigarDto: CigarPatchPayload): Promise<CigarGetDTO> {
     if (!cigarDto.name && !cigarDto.brand_id) {
       throw new BadRequestException(
         'At least one valid field (name or brand_id) must be provided',
@@ -104,6 +106,10 @@ export class CigarService {
       id: updatedCigar.id,
       name: updatedCigar.name,
       brand_id: updatedCigar.brand_id,
+      brand_name: updatedCigar.brand.name,
+      vitolas: updatedCigar.vitolas || [],
+      created_at: updatedCigar.created_at,
+      updated_at: updatedCigar.updated_at,
     };
   }
 }

@@ -24,7 +24,7 @@ import {
 @ApiTags('cigars')
 @Controller('cigars')
 export class CigarController {
-  constructor(private readonly cigarService: CigarService) {}
+  constructor(private readonly cigarService: CigarService) { }
 
   @Get()
   @ApiOperation({ summary: 'Get all cigars' })
@@ -53,12 +53,10 @@ export class CigarController {
   @ApiResponse({
     status: 200,
     description: 'Created cigar',
-    type: CigarPostPayload,
+    type: CigarGetDTO,
   })
   @ApiResponse({ status: 400, description: 'Invalid input' })
-  async create(
-    @Body() createCigarDto: CigarPostPayload,
-  ): Promise<CigarPostPayload> {
+  async create(@Body() createCigarDto: CigarPostPayload): Promise<CigarGetDTO> {
     return this.cigarService.create(createCigarDto);
   }
 
@@ -76,7 +74,7 @@ export class CigarController {
   async update(
     @Param('id') id: string,
     @Body() updateCigarDto: CigarPatchPayload,
-  ): Promise<CigarPostPayload> {
+  ): Promise<CigarGetDTO> {
     return this.cigarService.update(id, updateCigarDto);
   }
 }

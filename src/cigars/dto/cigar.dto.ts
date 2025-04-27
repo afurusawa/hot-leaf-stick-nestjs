@@ -64,13 +64,6 @@ export class CigarGetDTO {
 
 export class CigarPostPayload {
   @ApiProperty({
-    description: 'Unique identifier of the cigar',
-    format: 'uuid',
-  })
-  @IsUUID()
-  id?: string; // Made optional since it's not provided in the input but included in the response
-
-  @ApiProperty({
     description: 'Name of the cigar',
     example: 'Partagas Serie D No. 4',
   })
