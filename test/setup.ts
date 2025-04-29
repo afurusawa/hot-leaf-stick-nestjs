@@ -4,7 +4,7 @@ import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cigar } from '../src/cigars/entities/cigar.entity';
 import { Brand } from '../src/brands/entities/brand.entity';
-import { Vitola } from '../src/cigars/entities/vitola.entity';
+import { Vitola } from '../src/vitolas/entities/vitola.entity';
 
 export async function setupTestApp(): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({

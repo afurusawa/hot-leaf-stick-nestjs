@@ -19,7 +19,7 @@ export class CigarService {
     @InjectRepository(Cigar)
     private readonly cigarRepository: Repository<Cigar>,
     private readonly brandService: BrandService,
-  ) { }
+  ) {}
 
   async findAll(): Promise<CigarGetDTO[]> {
     const cigars = await this.cigarRepository.find({

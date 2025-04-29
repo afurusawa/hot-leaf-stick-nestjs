@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
-import { Vitola } from './vitola.entity';
+import { Vitola } from '../../vitolas/entities/vitola.entity';
 
 @Entity('cigars')
 export class Cigar {

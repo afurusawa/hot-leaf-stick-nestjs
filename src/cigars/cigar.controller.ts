@@ -24,7 +24,7 @@ import {
 @ApiTags('cigars')
 @Controller('cigars')
 export class CigarController {
-  constructor(private readonly cigarService: CigarService) { }
+  constructor(private readonly cigarService: CigarService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all cigars' })

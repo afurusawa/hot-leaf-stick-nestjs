@@ -7,9 +7,9 @@ async function seed() {
     type: 'postgres',
     host: 'localhost',
     port: 5432,
-    username: 'test_user',
-    password: 'test_password',
-    database: 'test_database',
+    username: 'andrew',
+    password: 'devotion-INGA-slob-punks',
+    database: 'hot_leaf_stick',
     entities: ['src/**/*.entity.ts'],
     synchronize: false, // Set to false to avoid schema changes
   });
@@ -19,8 +19,12 @@ async function seed() {
 
   // Add Brands
   const brands = [
-    { name: 'Test Brand 1', site_url: 'https://www.testbrand1.com' },
-    { name: 'Test Brand 2', site_url: null },
+    {
+      name: 'Sanj Patel',
+      site_url:
+        'https://www.shouldismokethis.com/product-category/cigars/sanj-patel/',
+    },
+    { name: 'Drew Estate', site_url: 'https://drewestate.com/' },
   ];
 
   const savedBrands = await brandRepository.save(
@@ -29,9 +33,9 @@ async function seed() {
 
   // Add Cigars
   const cigars = [
-    { name: 'Test Cigar 1', brand: savedBrands[0] },
-    { name: 'Test Cigar 2', brand: savedBrands[0] },
-    { name: 'Test Cigar 3', brand: savedBrands[1] },
+    { name: 'Gas Station Sushi Habano', brand: savedBrands[0] },
+    { name: 'SP1014 Antra', brand: savedBrands[0] },
+    { name: 'Undercrown 10', brand: savedBrands[1] },
   ];
 
   await cigarRepository.save(

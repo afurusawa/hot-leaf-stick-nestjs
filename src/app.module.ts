@@ -5,8 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CigarModule } from './cigars/cigar.module';
 import { Cigar } from './cigars/entities/cigar.entity';
 import { Brand } from './brands/entities/brand.entity';
-import { Vitola } from './cigars/entities/vitola.entity';
+import { Vitola } from './vitolas/entities/vitola.entity';
 import { BrandModule } from './brands/brand.module';
+import { VitolaModule } from './vitolas/vitola.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { BrandModule } from './brands/brand.module';
     }),
     BrandModule,
     CigarModule,
+    VitolaModule,
   ],
 })
 export class AppModule {}

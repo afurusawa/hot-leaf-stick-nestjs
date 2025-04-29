@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Cigar } from './cigars/entities/cigar.entity';
 import { Brand } from './brands/entities/brand.entity';
-import { Vitola } from './cigars/entities/vitola.entity';
+import { Vitola } from './vitolas/entities/vitola.entity';
 
 const configService = new ConfigService();
 

@@ -20,7 +20,8 @@
   },
   "include": [
     "src/**/*",
-    "seeds/**/*"
+    "seeds/**/*",
+    "test/**/*"
   ],
   "exclude": [
     "node_modules",
