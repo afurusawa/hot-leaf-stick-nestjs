@@ -6,8 +6,13 @@ import { CigarModule } from './cigars/cigar.module';
 import { Cigar } from './cigars/entities/cigar.entity';
 import { Brand } from './brands/entities/brand.entity';
 import { Vitola } from './vitolas/entities/vitola.entity';
+import { Collection } from './collections/entities/collection.entity';
+import { User } from './users/entities/user.entity';
 import { BrandModule } from './brands/brand.module';
 import { VitolaModule } from './vitolas/vitola.module';
+import { CollectionsModule } from './collections/collections.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +26,7 @@ import { VitolaModule } from './vitolas/vitola.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Cigar, Brand, Vitola],
+        entities: [Cigar, Brand, Vitola, Collection, User],
         synchronize: configService.get('NODE_ENV') === 'development', // Auto-create tables in dev
       }),
       inject: [ConfigService],
@@ -29,6 +34,9 @@ import { VitolaModule } from './vitolas/vitola.module';
     BrandModule,
     CigarModule,
     VitolaModule,
+    CollectionsModule,
+    UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

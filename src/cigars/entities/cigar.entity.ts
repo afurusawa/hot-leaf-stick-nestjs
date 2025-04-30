@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
 import { Vitola } from '../../vitolas/entities/vitola.entity';
+import { Collection } from '../../collections/entities/collection.entity';
 
 @Entity('cigars')
 export class Cigar {
@@ -27,6 +28,9 @@ export class Cigar {
 
   @OneToMany(() => Vitola, (vitola) => vitola.cigar)
   vitolas: Vitola[];
+
+  @OneToMany(() => Collection, (collection) => collection.cigar)
+  collections: Collection[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
