@@ -9,9 +9,9 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto, UpdateCollectionDto } from './dto/collection.dto';
-import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -25,7 +25,7 @@ import { User } from '../users/entities/user.entity';
 @ApiTags('collections')
 @ApiBearerAuth()
 @Controller('collections')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class CollectionsController {
   constructor(private readonly collectionsService: CollectionsService) {}
 

@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Cigar } from '../../cigars/entities/cigar.entity';
 import { User } from '../../users/entities/user.entity';
+import { Vitola } from 'src/vitolas/entities/vitola.entity';
 
 @Entity('collections')
 export class Collection {
@@ -31,6 +32,10 @@ export class Collection {
 
   @Column({ name: 'vitola_id' })
   vitola_id: string;
+
+  @ManyToOne(() => Vitola, (vitola: Vitola) => vitola.collections)
+  @JoinColumn({ name: 'vitola_id' })
+  vitola: Vitola;
 
   @Column({ type: 'int', default: 1 })
   quantity: number;

@@ -6,7 +6,9 @@ import {
   Param,
   Body,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CigarService } from './cigar.service';
 import {
   CigarGetDTO,
@@ -19,10 +21,13 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('cigars')
+@ApiBearerAuth()
 @Controller('cigars')
+@UseGuards(JwtAuthGuard)
 export class CigarController {
   constructor(private readonly cigarService: CigarService) {}
 

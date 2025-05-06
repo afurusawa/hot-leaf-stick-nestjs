@@ -23,7 +23,7 @@ export class CollectionsService {
   async findAll(user: User) {
     return this.collectionsRepository.find({
       where: { user_id: user.id },
-      relations: ['cigar', 'cigar.brand'],
+      relations: ['cigar', 'cigar.brand', 'vitola'],
     });
   }
 

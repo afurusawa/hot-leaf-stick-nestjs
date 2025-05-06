@@ -6,7 +6,9 @@ import {
   Param,
   Body,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { BrandService } from './brand.service';
 import {
   BrandGetDTO,
@@ -19,10 +21,13 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('brands')
+@ApiBearerAuth()
 @Controller('brands')
+@UseGuards(JwtAuthGuard)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
