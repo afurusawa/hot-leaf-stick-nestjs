@@ -17,10 +17,10 @@ export class Vitola {
   @Column()
   name: string;
 
-  @Column()
+  @Column('decimal', { precision: 4, scale: 2 })
   length: number;
 
-  @Column()
+  @Column('integer')
   ring_gauge: number;
 
   @ManyToOne(() => Cigar, (cigar) => cigar.vitolas)

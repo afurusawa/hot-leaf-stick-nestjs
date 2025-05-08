@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vitola } from './entities/vitola.entity';
@@ -27,29 +31,62 @@ export class VitolaService {
   }
 
   async create(createVitolaDto: CreateVitolaDto): Promise<Vitola> {
-    const cigar = await this.cigarRepository.findOne({
-      where: { id: createVitolaDto.cigar_id },
-    });
-    if (!cigar) throw new Error('Cigar not found');
+    try {
+      const cigar = await this.cigarRepository.findOne({
+        where: { id: createVitolaDto.cigar_id },
+      });
+      if (!cigar) {
+        throw new NotFoundException('Cigar not found');
+      }
 
-    const vitola = this.vitolaRepository.create({
-      ...createVitolaDto,
-      cigar,
-    });
-    return this.vitolaRepository.save(vitola);
+      const vitola = this.vitolaRepository.create({
+        ...createVitolaDto,
+        cigar,
+      });
+      return await this.vitolaRepository.save(vitola);
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      console.error('Error creating vitola:', error);
+      throw new BadRequestException(
+        'Failed to create vitola: ' +
+          (error instanceof Error ? error.message : 'Unknown error'),
+      );
+    }
   }
 
   async update(id: string, updateVitolaDto: CreateVitolaDto): Promise<Vitola> {
-    const cigar = await this.cigarRepository.findOne({
-      where: { id: updateVitolaDto.cigar_id },
-    });
-    if (!cigar) throw new Error('Cigar not found');
+    try {
+      const cigar = await this.cigarRepository.findOne({
+        where: { id: updateVitolaDto.cigar_id },
+      });
+      if (!cigar) {
+        throw new NotFoundException('Cigar not found');
+      }
 
-    await this.vitolaRepository.update(id, {
-      ...updateVitolaDto,
-      cigar,
-    });
-    return this.findOne(id);
+      await this.findOne(id); // Verify vitola exists
+      await this.vitolaRepository.update(id, {
+        ...updateVitolaDto,
+        cigar,
+      });
+      return this.findOne(id);
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      console.error('Error updating vitola:', error);
+      throw new BadRequestException(
+        'Failed to update vitola: ' +
+          (error instanceof Error ? error.message : 'Unknown error'),
+      );
+    }
   }
 
   async remove(id: string): Promise<void> {

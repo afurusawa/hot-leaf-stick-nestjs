@@ -8,6 +8,7 @@ import {
   Param,
   Put,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { VitolaService } from './vitola.service';
 import { CreateVitolaDto } from './dto/vitola.dto';
@@ -35,10 +36,13 @@ export class VitolaController {
     try {
       return await this.vitolaService.create(createVitolaDto);
     } catch (error) {
-      if (error instanceof BadRequestException) {
+      console.error('Error creating vitola:', error);
+      if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException('Failed to create vitola');
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Failed to create vitola',
+      );
     }
   }
 
@@ -69,7 +73,17 @@ export class VitolaController {
     @Param('id') id: string,
     @Body() updateVitolaDto: CreateVitolaDto,
   ) {
-    return this.vitolaService.update(id, updateVitolaDto);
+    try {
+      return await this.vitolaService.update(id, updateVitolaDto);
+    } catch (error) {
+      console.error('Error updating vitola:', error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Failed to update vitola',
+      );
+    }
   }
 
   @Delete(':id')

@@ -1,4 +1,4 @@
-import { IsString, IsUUID, IsNumber, Min } from 'class-validator';
+import { IsString, IsUUID, IsNumber, Min, IsInt } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVitolaDto {
@@ -17,19 +17,22 @@ export class CreateVitolaDto {
   name: string;
 
   @ApiProperty({
-    description: 'Length of the vitola in inches',
-    example: 5,
+    description:
+      'Length of the vitola in inches (supports up to 2 decimal places)',
+    example: 5.5,
+    minimum: 0.1,
   })
   @IsNumber()
-  @Min(0)
+  @Min(0.1)
   length: number;
 
   @ApiProperty({
-    description: 'Ring gauge of the vitola',
+    description: 'Ring gauge of the vitola (must be a whole number)',
     example: 50,
+    minimum: 1,
   })
-  @IsNumber()
-  @Min(0)
+  @IsInt()
+  @Min(1)
   ring_gauge: number;
 }
 
