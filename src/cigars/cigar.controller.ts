@@ -42,6 +42,19 @@ export class CigarController {
     return this.cigarService.findAll();
   }
 
+  @Get('by-brand/:brandId')
+  @ApiOperation({ summary: 'Get cigars by brand ID' })
+  @ApiParam({ name: 'brandId', type: String, description: 'Brand ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of cigars for the specified brand',
+    type: [CigarGetDTO],
+  })
+  @ApiResponse({ status: 404, description: 'Brand not found' })
+  async findByBrand(@Param('brandId') brandId: string): Promise<CigarGetDTO[]> {
+    return this.cigarService.findByBrand(brandId);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a single cigar by ID' })
   @ApiParam({ name: 'id', type: String, description: 'Cigar ID' })

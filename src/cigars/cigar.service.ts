@@ -36,6 +36,22 @@ export class CigarService {
     }));
   }
 
+  async findByBrand(brandId: string): Promise<CigarGetDTO[]> {
+    const cigars = await this.cigarRepository.find({
+      where: { brand_id: brandId },
+      relations: ['brand', 'vitolas'],
+    });
+    return cigars.map((cigar) => ({
+      id: cigar.id,
+      name: cigar.name,
+      brand_id: cigar.brand_id,
+      brand_name: cigar.brand.name,
+      vitolas: cigar.vitolas || [],
+      created_at: cigar.created_at,
+      updated_at: cigar.updated_at,
+    }));
+  }
+
   async findOne(id: string): Promise<CigarGetDTO> {
     const cigar = await this.cigarRepository.findOne({
       where: { id },

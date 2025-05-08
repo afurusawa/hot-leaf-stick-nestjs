@@ -53,6 +53,18 @@ export class VitolaController {
     return this.vitolaService.findAll();
   }
 
+  @Get('by-cigar/:cigarId')
+  @ApiOperation({ summary: 'Get vitolas by cigar ID' })
+  @ApiParam({ name: 'cigarId', description: 'Cigar ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns vitolas for the specified cigar',
+  })
+  @ApiResponse({ status: 404, description: 'Cigar not found' })
+  async findByCigar(@Param('cigarId') cigarId: string) {
+    return this.vitolaService.findByCigar(cigarId);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a vitola by id' })
   @ApiParam({ name: 'id', description: 'Vitola ID' })

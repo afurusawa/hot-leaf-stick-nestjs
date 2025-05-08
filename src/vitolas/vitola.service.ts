@@ -22,6 +22,18 @@ export class VitolaService {
     return this.vitolaRepository.find();
   }
 
+  async findByCigar(cigarId: string): Promise<Vitola[]> {
+    const cigar = await this.cigarRepository.findOne({
+      where: { id: cigarId },
+    });
+    if (!cigar) {
+      throw new NotFoundException('Cigar not found');
+    }
+    return this.vitolaRepository.find({
+      where: { cigar: { id: cigarId } },
+    });
+  }
+
   async findOne(id: string): Promise<Vitola> {
     const vitola = await this.vitolaRepository.findOne({ where: { id } });
     if (!vitola) {
