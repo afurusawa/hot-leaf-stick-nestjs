@@ -21,7 +21,7 @@ async function bootstrap() {
   const cors = await import('@fastify/cors');
   await app.register(cors.default, {
     origin: 'http://localhost:5173', // Allow requests from your frontend
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Allowed HTTP methods
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true, // Allow cookies or auth headers if needed
   });

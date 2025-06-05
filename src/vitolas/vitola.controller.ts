@@ -6,12 +6,12 @@ import {
   BadRequestException,
   Get,
   Param,
-  Put,
+  Patch,
   Delete,
   NotFoundException,
 } from '@nestjs/common';
 import { VitolaService } from './vitola.service';
-import { CreateVitolaDto } from './dto/vitola.dto';
+import { CreateVitolaDto, UpdateVitolaDto } from './dto/vitola.dto';
 import {
   ApiTags,
   ApiOperation,
@@ -74,16 +74,16 @@ export class VitolaController {
     return this.vitolaService.findOne(id);
   }
 
-  @Put(':id')
-  @ApiOperation({ summary: 'Update a vitola' })
+  @Patch(':id')
+  @ApiOperation({ summary: 'Partially update a vitola' })
   @ApiParam({ name: 'id', description: 'Vitola ID' })
-  @ApiBody({ type: CreateVitolaDto })
+  @ApiBody({ type: UpdateVitolaDto })
   @ApiResponse({ status: 200, description: 'Vitola updated successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 404, description: 'Vitola not found' })
   async update(
     @Param('id') id: string,
-    @Body() updateVitolaDto: CreateVitolaDto,
+    @Body() updateVitolaDto: UpdateVitolaDto,
   ) {
     try {
       return await this.vitolaService.update(id, updateVitolaDto);

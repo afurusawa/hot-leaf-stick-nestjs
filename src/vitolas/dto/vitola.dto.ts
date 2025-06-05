@@ -1,5 +1,6 @@
 import { IsString, IsUUID, IsNumber, Min, IsInt } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateVitolaDto {
   @ApiProperty({
@@ -36,10 +37,4 @@ export class CreateVitolaDto {
   ring_gauge: number;
 }
 
-export class VitolaGetDTO extends CreateVitolaDto {
-  @ApiProperty({
-    description: 'Unique identifier of the vitola',
-    format: 'uuid',
-  })
-  id: string;
-}
+export class UpdateVitolaDto extends PartialType(CreateVitolaDto) {}

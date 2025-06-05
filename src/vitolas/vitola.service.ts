@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vitola } from './entities/vitola.entity';
 import { Cigar } from '../cigars/entities/cigar.entity';
-import { CreateVitolaDto } from './dto/vitola.dto';
+import { CreateVitolaDto, UpdateVitolaDto } from './dto/vitola.dto';
 
 @Injectable()
 export class VitolaService {
@@ -71,18 +71,24 @@ export class VitolaService {
     }
   }
 
-  async update(id: string, updateVitolaDto: CreateVitolaDto): Promise<Vitola> {
+  async update(id: string, updateVitolaDto: UpdateVitolaDto): Promise<Vitola> {
     try {
-      const cigar = await this.cigarRepository.findOne({
-        where: { id: updateVitolaDto.cigar_id },
-      });
-      if (!cigar) {
-        throw new NotFoundException('Cigar not found');
+      const vitola = await this.findOne(id); // Verify vitola exists
+
+      let cigar = vitola.cigar;
+      if (updateVitolaDto.cigar_id) {
+        const newCigar = await this.cigarRepository.findOne({
+          where: { id: updateVitolaDto.cigar_id },
+        });
+        if (!newCigar) {
+          throw new NotFoundException('Cigar not found');
+        }
+        cigar = newCigar;
       }
 
-      await this.findOne(id); // Verify vitola exists
+      const { ...updateData } = updateVitolaDto;
       await this.vitolaRepository.update(id, {
-        ...updateVitolaDto,
+        ...updateData,
         cigar,
       });
       return this.findOne(id);
